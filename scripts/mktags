@@ -1,0 +1,57 @@
+#!/bin/bash
+# mktags v1.1
+# Make tags for source code
+#
+
+# Modifications:
+# (1.00) IPNET - Creation
+# (1.01) Kent - Updated directories to ignore; disabled tags.old for subdirectories
+
+PROG=`basename $0`
+
+CTAGS=`which ctags`
+
+if [ -z "$CTAGS" ]; then
+    echo "$PROG: error no exctags program found"
+    exit 1
+fi
+
+echo "$PROG : Generates a ctags file for a whole directory tree"
+echo ""
+echo "Usage : Run script from root directory of the source tree (this is important!)"
+
+# Save previous tags file
+if [ -f tags ]; then
+    echo "$PROG: Existing tags file found. Renaming to tags.old"
+    mv tags tags.old
+fi
+
+# Remove soft link in each subdirectory
+for subdir in $(find . -type d | grep -v CVS | grep -v svn | grep -v build | grep -v git | grep -v out) ; do
+if [ "$subdir" != "." ]; then
+    if [ -L $subdir/tags ]; then
+        echo "    Removing existing soft link $subdir/tags"
+        rm $subdir/tags
+    fi
+fi
+done
+
+# Generate an escaped version of working directory string
+#    (escaped meaning all '/' are replaced with '\/' )
+PWD_ESC=$(echo $PWD/ | sed -e 's#\/#\\\/#g')
+
+# Generate tags file using ctags
+#   use sed to replace all occurences of './' with escaped current working directory string
+echo "$PROG: Generating tags file"
+$CTAGS -R -f - ./ | sed -e "s#\.\/#$PWD_ESC#" > tags
+
+# Make a soft link in each subdirectory except CVS, svn, build, git, out
+for subdir in $(find . -type d | grep -v CVS | grep -v svn | grep -v build | grep -v git | grep -v out) ; do
+if [ "$subdir" != "." ]; then
+    echo "    Creating new soft link $subdir/tags"
+    ln -s $PWD/tags $subdir/tags
+fi
+done
+
+echo ""
+echo "$PROG: tags file (+ soft links) created."

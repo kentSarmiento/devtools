@@ -1,0 +1,16 @@
+# .ag v1.0
+# Ag command for searching
+#
+# Usage: ag <pattern>, where pattern is what to search for
+# Note: This is a legacy script used by IPNET project
+#
+
+# Modifications:
+# (1.00) IPNET - Creation
+
+# Todo:
+# Improve speed for searching NCA code base
+
+ag() {
+    find . -name "*.[ch]*" -exec grep -Hns $1 {} \;
+}

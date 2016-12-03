@@ -1,0 +1,10 @@
+#!/bin/bash
+# clean-trash v1.0
+# Script for cleaning ~/.trash-bin directory
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+echo "Emptying Trash Folder..."
+\rm -rf ~/.trash-bin/*

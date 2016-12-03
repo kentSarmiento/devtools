@@ -1,0 +1,40 @@
+#!/bin/bash
+# ada v1.0
+# Updates all git repositories tracked in ~/.gitrepos file.
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+git_list="$HOME/.gitrepos"
+
+if [ ! -f $git_list ]; then
+    echo "No list of git repos!"
+    exit
+fi
+
+while read -r line
+do
+    repo="$line"
+    echo "Updating the following repo - $repo..."
+
+    # Check if directory is valid dir and git repo, if not remove from list
+    if [ -d "$repo" ]; then
+        if [ -d "$repo/.git" ]; then
+            echo "$repo is a valid repo"
+            echo "$repo" >> $HOME/.gitrepos.bk
+            cd $repo
+
+            # Stash modifications
+            echo "Stashing local modifications..."
+            git stash
+
+            # Pull from remote
+            echo "Pulling remote modifications..."
+            git pull
+        fi
+    fi
+done < "$git_list"
+
+# Track valid repos only
+mv $HOME/.gitrepos.bak $HOME/.gitrepos

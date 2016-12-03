@@ -1,0 +1,23 @@
+#!/bin/bash
+# rmtags v1.1
+# Remove tags for source code
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+# Save previous tags file
+if [ -f tags ]; then
+    echo "$PROG: Existing tags file found. Renaming to tags.old"
+    mv tags tags.old
+fi
+
+# Remove soft link in each subdirectory
+for subdir in $(find . -type d | grep -v CVS | grep -v svn | grep -v build | grep -v git | grep -v out) ; do
+if [ "$subdir" != "." ]; then
+    if [ -L $subdir/tags ]; then
+        echo "    Removing existing soft link $subdir/tags"
+        rm $subdir/tags
+    fi
+fi
+done

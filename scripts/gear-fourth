@@ -1,0 +1,59 @@
+#!/bin/bash
+# gear-fourth v1.0
+# Updates dotfiles in your home directory with devtools dotfiles
+# This script should be run below devtools directory
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+DEVTOOLS="$PWD/devtools"
+if [ ! -e $DEVTOOLS ]; then
+    echo "Luffy's gear-fourth should be used below devtools directory..."
+    exit
+fi
+
+echo "Luffy used gear-fourth ..."
+
+# Add scripts to PATH
+echo "export PATH=$PATH:$DEVTOOLS/scripts" >> $DEVTOOLS/dotfiles/.bashrc
+
+dotfile_bak="$DEVTOOLS/.bak"
+if [ ! -e $dotfile_bak ]; then
+    echo "mkdir $dotfile_bak"
+    mkdir $dotfile_bak
+fi
+
+dotfile_dir="$DEVTOOLS/dotfiles/.*"
+for dotfile in $dotfile_dir; do
+    if [ -f $dotfile ]; then
+        dotfile_base="$(basename $dotfile)"
+        dotfile_home="$HOME/$dotfile_base"
+        if [ -e $dotfile_home ]; then
+            echo "mv $dotfile_home "$DEVTOOLS/.bak/$dotfile_base""
+            mv $dotfile_home "$DEVTOOLS/.bak/$dotfile_base"
+        fi
+        echo "ln -s "$DEVTOOLS/dotfiles/$dotfile_base" $dotfile_home"
+        ln -s "$DEVTOOLS/dotfiles/$dotfile_base" $dotfile_home
+    fi
+done
+
+echo "ln -s "$DEVTOOLS/dotfiles/.gitignore" $HOME/.agignore"
+mv $HOME/.agignore "$DEVTOOLS/.bak/.agignore"
+ln -s "$DEVTOOLS/dotfiles/.gitignore" $HOME/.agignore
+
+# Create .logs directory to store commands history
+for dirname in "$HOME/.logs" "$HOME/.logs/jenkins" "$HOME/.trash-bin"; do
+    if [ ! -e $dirname ]; then
+        echo "mkdir $dirname"
+        mkdir $dirname
+    fi
+done
+
+# Configure git template directory for hooks
+git config --global init.templatedir "$DEVTOOLS/git_template"
+
+# Reload bashrc
+source $HOME/.bashrc
+
+echo "Luffy's gear-fourth is super effective!"

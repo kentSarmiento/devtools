@@ -1,0 +1,16 @@
+# .githooks v1.0
+# Environment variables for git hooks
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+# Enable NCA compilation
+export NCA=1
+# Enable compilation for ICE
+export ICE=1
+# Enable compilation for BOARD
+export BOARD=1
+
+# Enable XPT compilation
+export XPT=1

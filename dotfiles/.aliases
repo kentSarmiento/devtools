@@ -1,0 +1,87 @@
+# .aliases v1.0
+# Useful aliases and functions
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+# Common shortcuts
+alias g="git"           # Git shortcut
+alias v="vim"           # New Vim shortcut
+alias vi="vim"          # New Vim shortcut
+alias ll="ls -Glah"     # List all including hidden, long format
+alias cp="cp -r -v -f"  # Copy recursively, verbosely, forced
+alias mv="mv -v -f -i"  # Move verbosely, forced, interactively
+alias rm="rm -r -i"     # Remove recursively, interactively
+alias md="mkdir"        # Create directory(ies)
+alias cl="clear"        # Clearscreen
+alias q="exit"          # Exit terminal
+
+# Git commands, saves you the trouble of using spaces
+alias gpl="git pl"
+alias gps="git push"
+alias gco="git co"
+alias gcp="git cp"
+alias gpick="git pick"
+alias gst="git st"
+alias gs="git s"
+alias grb="git rb"
+alias gr="git r"
+alias gmg="git mg"
+alias gm="git m"
+alias gbr="git br"
+alias gb="git b"
+alias ga="git a"
+alias gap="git ap"
+alias gd="git d"
+alias gl="git l"
+alias gcm="git cm"
+alias gcv="git cv"
+alias gamend="git amend"
+alias guncommit="git uncommit"
+alias gunstage="git unstage"
+alias gundo="git undo"
+alias gls="git ls"
+alias gll="git ll"
+alias grvwfile="git rvwfile"
+alias grvwcommit="git rvwcommit"
+alias gmv="git mv"
+alias grm="git rm"
+
+# Clone repository, change directory, track repository for automatic update
+gcl() {
+    git cl "$1" && cd "$(basename $1 .git)" && echo $PWD >> ~/.gitrepos
+}
+
+# Yum download shortcut
+alias yumdl="yum install --downloadonly --downloaddir=. -y"
+
+# Create directory and change current directory
+mcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Find a file and open in vim
+vif() {
+    vim `find . -name $1`
+}
+
+# Find a dry/nca-specific file and open in vim
+vid() {
+    vim `find . -name $1 | grep -e dry -e nca`
+}
+
+# Find linux/xpt-specific file and open in vim
+vil() {
+    vim `find . -name $1 | grep -e linux -e xpt`
+}
+
+# Encrypt file
+lock() {
+    tar --create --file - --posix --gzip -- "$1" | openssl enc -e -aes256 -out "$1.enc" && rm -rf $1;
+}
+
+# Decrypt file
+unlock() {
+    openssl enc -d -aes256 -in "$1" | tar --extract --file - --gzip && rm -rf $1;
+}

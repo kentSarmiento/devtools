@@ -1,0 +1,11 @@
+#!/bin/bash
+# pre-push v1.0
+# pre-push git hook
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+echo "Executing hyojoo..."
+hyojoo
+exit $?

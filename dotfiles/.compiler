@@ -1,0 +1,30 @@
+# .compiler v1.0
+# Useful aliases and functions for build commands
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+# NCA Build commands
+alias mkmdic="make PRODUCT=MADRID TARGET=ICE"
+alias mkmdbd="make PRODUCT=MADRID TARGET=BOARD"
+alias mkzric="make PRODUCT=ZURICH TARGET=ICE"
+alias mkzrbd="make PRODUCT=ZURICH TARGET=BOARD"
+alias mkpric="make PRODUCT=PRETORIA TARGET=ICE"
+alias mkprbd="make PRODUCT=PRETORIA TARGET=BOARD"
+alias mkmnic="make PRODUCT=MANAUS TARGET=ICE"
+alias mkmnbd="make PRODUCT=MANAUS TARGET=BOARD"
+
+# XPT2 Build commands
+alias mk="su xpt -c 'make'"
+alias mkcl="su xpt -c 'make clean'"
+alias mkpk="su xpt -c 'make package'"
+
+# XPT2 Generate Pinfogen
+mkpg() {
+    case $# in
+        2) echo "pinfo_completion.rb -f $1 -i $2"          ;;
+        3) echo "pinfo_completion.rb -f $1 -i $2 -p $3"    ;;
+        *) echo "Invalid number of parameters"      ;;
+    esac
+}

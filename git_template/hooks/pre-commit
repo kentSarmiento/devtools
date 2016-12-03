@@ -1,0 +1,11 @@
+#!/bin/bash
+# pre-commit v1.0
+# pre-commit git hook
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+echo "Executing shinhye..."
+shinhye
+exit $?

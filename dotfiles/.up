@@ -1,0 +1,28 @@
+# .up v1.0
+# Up command for easier directory navigation
+#
+# Usage: up <num>, where num is number of directories to go up to
+# Examples:
+# up is same as cd ..
+# up 2 is same as cd ../..
+# up 5 is same as cd ../../../../../
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+# Todo:
+# Pass directories as parameter
+
+up() {
+    i=1
+    dir=".."
+    if [ ! -z "$1" ]; then
+        while [ $i -lt $1 ]
+        do
+            dir="$dir/.."
+            ((i++))
+        done
+    fi
+    cd "$dir"
+}

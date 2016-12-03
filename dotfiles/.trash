@@ -1,0 +1,20 @@
+# .trash v1.0
+# Disable rm command to avoid accidental removal of files
+#
+# Usage: tp <files>, where files are the files to move to trash-bin directory
+# Note: To still use rm, append '\' (e.g. \rm -rf *)
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+alias rm='echo "Avoid rm. Use tp ;)"; false'
+
+tp() {
+    for var in "$@"; do
+        if [ -e "$HOME/.trash-bin/$var" ]; then
+            \rm -rf "$HOME/.trash-bin/$var"
+        fi
+        \mv $var ~/.trash-bin
+    done
+}

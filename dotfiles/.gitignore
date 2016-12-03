@@ -1,0 +1,31 @@
+# .gitignore v1.0
+# The following files will be ignored by Git/Ag
+#
+
+# Modifications:
+# (1.00) IPNET - Creation
+
+*bootable*
+*.pinfogen
+*.bin
+*.nlf
+*.so
+*.o
+*.d
+tags*
+reftree/
+boot/
+CVS/
+.git/
+.svn/
+*.io
+*.ioo
+*.objio*
+*.objioo*
+*.so.*
+*.a
+*.gcov
+*.gcda
+*.gcno
+.config
+*.bak

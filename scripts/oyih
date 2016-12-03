@@ -1,0 +1,10 @@
+#!/bin/bash
+# oyih v1.0
+#
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+# Todo:
+# Save logs to $HOME/.logs/oyih

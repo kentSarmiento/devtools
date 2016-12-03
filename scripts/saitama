@@ -1,0 +1,46 @@
+#!/bin/bash
+# saitama v1.0
+# Jenkins script to maintain development environment
+#
+
+# Modifications:
+# (1.00) Kent - Creation
+
+# Create logs file
+jenkins_logfile="$HOME/.logs/jenkins/$(date "+%Y-%m-%d").log"
+echo "Saving log to $jenkins_logfile"
+touch $jenkins_logfile
+
+# Update git repostories
+echo "Saitama will update git repositories using ada..." >> $jenkins_logfile
+ada
+git_list="$HOME/.gitrepos"
+if [ -f $git_list ]; then
+    echo "Saitama updated the following directories:" >> $jenkins_logfile
+    while read -r line
+    do
+        echo "$line"
+    done < "$git_list"
+else
+    echo "Saitama cannot find list of git repos!" >> $jenkins_logfile
+fi
+
+# Clean trash-bin
+echo "Saitama will clean trash-bin using marcos..."\
+        "Marcos not a hero!" >> $jenkins_logfile
+marcos
+
+# Update svn repositories
+svn_list="$HOME/.svnrepos"
+if [ ! -f $svn_list ]; then
+    echo "Saitama cannot find list of svn repos!" >> $jenkins_logfile
+else
+    while read -r line
+    do
+        cd $line
+        svn_rev=14344
+        echo "Saitama will update svn repository in $line using oyih,"\
+                "revision no $svn_rev..." >> $jenkins_logfile
+        oyih $svn_rev
+    done < "$svn_list"
+fi
